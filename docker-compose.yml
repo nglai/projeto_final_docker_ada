@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+
+  front:
+    container_name: front
+    build: 
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes: 
+      - ./front:/usr/share/nginx/html
+    networks:
+      - frontback
+
+  node_app:
+    container_name: node_app
+    build: 
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PG_DB=node_pg_db
+      - PG_USER=admin
+      - PG_PASSWORD=12345
+      - PG_HOST=node_db
+    restart: always
+    depends_on:
+      - node_db
+    networks:
+      - frontback
+  
+  node_db:
+    container_name: node_db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=node_pg_db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=12345
+    volumes:
+      - node_db_data:/var/lib/postgresql/data
+    networks:
+      - frontback
+
+volumes:
+  node_db_data: {}
+  
+networks:
+  frontback:
+
+
