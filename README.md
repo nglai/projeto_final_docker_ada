@@ -1,6 +1,6 @@
 "# projeto_final_docker_ada" 
 
-Porta do front end: http://localhost:8080
+Porta do front end: http://localhost:80
 
 Porta do banco Postgres: http://localhost:3000/users
 
