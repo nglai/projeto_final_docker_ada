@@ -8,7 +8,7 @@ services:
       context: ./front
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "80:80"
     volumes: 
       - ./front:/usr/share/nginx/html
     networks:
